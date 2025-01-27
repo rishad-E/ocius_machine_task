@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ociuz_task/utils/constant/colors.dart';
 import 'package:ociuz_task/view/cart_page.dart';
+import 'package:ociuz_task/view/purchase_screen.dart';
 
 class BottomNav extends StatelessWidget {
   const BottomNav({super.key});
@@ -68,7 +69,7 @@ class CartNavBar extends StatelessWidget {
                 color: kblack, fontSize: 18, fontWeight: FontWeight.bold),
           ),
           TextButton(
-              onPressed: () {},
+              onPressed: () => Get.to(() => const PurchaseScreen()),
               child: Text(
                 'proceed to checkout',
                 style: TextStyle(color: kblack),

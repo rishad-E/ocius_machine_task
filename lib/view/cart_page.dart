@@ -21,28 +21,45 @@ class CartPage extends StatelessWidget {
         child: GetBuilder<ProductController>(
           id: 'update-cart',
           builder: (c) {
-            return ListView.separated(
-              itemCount: c.cartItems.length,
-              itemBuilder: (context, index) {
-                final data = c.cartItems[index];
-                return CartItems(
-                  image: data.image,
-                  title: data.title,
-                  price: data.price.toString(),
-                  quantity: '${c.productQuantities[data.id] ?? 1}',
-                  onPressRemove: () => c.removeItemQuantity(data.id),
-                  onPressAdd: () => c.addItemQuantity(data.id),
-                  onPressDelete: () {
-                    c.deleteProduct(index);
-                    showCustomSnackbar(
-                        title: 'Deleted',
-                        message: 'Product deleted from cart',
-                        context: context);
-                  },
-                );
-              },
-              separatorBuilder: (context, index) => customBox(height: 5),
-            );
+            return c.cartItems.isEmpty
+                ? Center(
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.sentiment_dissatisfied_outlined),
+                        customBox(width: 14),
+                        const Text(
+                          "No Products found to your Cart",
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                )
+                : ListView.separated(
+                    itemCount: c.cartItems.length,
+                    itemBuilder: (context, index) {
+                      final data = c.cartItems[index];
+                      return CartItems(
+                        image: data.image,
+                        title: data.title,
+                        price: data.price.toString(),
+                        quantity: '${c.productQuantities[data.id] ?? 1}',
+                        onPressRemove: () => c.removeItemQuantity(data.id),
+                        onPressAdd: () => c.addItemQuantity(data.id),
+                        onPressDelete: () {
+                          c.deleteProduct(index);
+                          showCustomSnackbar(
+                              title: 'Deleted',
+                              message: 'Product deleted from cart',
+                              context: context);
+                        },
+                      );
+                    },
+                    separatorBuilder: (context, index) => customBox(height: 5),
+                  );
           },
         ),
       ),
